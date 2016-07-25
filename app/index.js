@@ -13,22 +13,22 @@ var parsedUrl = url.parse("http://gazongazon.ru/our-lawn.html"),
 
 request = http.request( parsedUrl, function( response ) {
   response.setEncoding( "utf8" );
-    response.on( "data", function( chunk ) {
-      html.push( chunk );
-    });
-    response.on( "end", function() {
-      var urlsLength,
-        downloader = new Downloader( parsedUrl );
+  response.on( "data", function( chunk ) {
+    html.push( chunk );
+  });
+  response.on( "end", function() {
+    var urlsLength,
+      downloader = new Downloader( parsedUrl );
 
-      downloader.analysis( html.join("" ) );
-      downloader.getImageElements({ tagName:"img" });
-      urlsLength = downloader.urls.length;
+    downloader.analysis( html.join("" ) );
+    downloader.getImageElements({ tagName:"img" });
+    urlsLength = downloader.urls.length;
 
-      for ( var i = 0; i < urlsLength; i++ ) {
-        console.log( "Downloaded " + downloader.urls[ i ] );
-        downloader.getImage( url.parse( downloader.urls[ i ] ), writeImage );
-      }
-      });
+    for ( var i = 0; i < urlsLength; i++ ) {
+      console.log( "Downloaded " + downloader.urls[ i ] );
+      downloader.getImage( url.parse( downloader.urls[ i ] ), writeImage );
+    }
+  });
 });
 
 request.on("error", function( e ) {
