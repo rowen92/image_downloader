@@ -35,3 +35,6 @@ jspm_packages
 
 #Documentation
 out
+
+#Downloaded images
+downloaded_images
