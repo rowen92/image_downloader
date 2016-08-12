@@ -4,7 +4,6 @@ var htmlparser = require("htmlparser" ),
   http = require("http" ),
   fs   = require( "fs" ),
   url  = require("url" ),
-  path = require("path" ),
   Downloader = require("./downloader");
 
 var parsedUrl = url.parse("http://gazongazon.ru/our-lawn.html"),
@@ -20,7 +19,7 @@ request = http.request( parsedUrl, function( response ) {
     var urlsLength,
       downloader = new Downloader( parsedUrl );
 
-    downloader.analysis( html.join("" ) );
+    downloader.analysis( html.join("") );
     downloader.getImageElements({ tagName:"img" });
     urlsLength = downloader.urls.length;
 
@@ -37,7 +36,6 @@ request.on("error", function( e ) {
 
 request.end();
 
-
 /**
  * Write image
  * @param  {object} imageData Data of image
@@ -48,11 +46,12 @@ function writeImage( imageData, fileName ) {
   fs.stat( imageDir, function( error ) {
     if ( error ) {
       fs.mkdirSync( imageDir );
-      fs.writeFile( imageDir + "/" + fileName, imageData, "binary", function( error ) {
-        if ( error ) {
-          console.log( error );
-        }
-      });
     }
+
+    fs.writeFile( imageDir + "/" + fileName, imageData, "binary", function( error ) {
+      if ( error ) {
+        console.log( error );
+      }
+    });
   });
 }

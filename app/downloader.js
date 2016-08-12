@@ -42,12 +42,6 @@ Downloader.prototype.getImageElements = function( option ) {
     url = null,
     i = 0;
 
-  if ( option == null ) {
-    option = { tagName: "img" };
-  } else {
-    option;
-  }
-
 	tags = htmlparser.DomUtils.getElements({
     tag_name: function( val ) {
       return val.toLowerCase() === option.tagName;
@@ -59,15 +53,13 @@ Downloader.prototype.getImageElements = function( option ) {
   for ( ; i < tagsLength; i++ ) {
     url = tags[ i ].attribs.src;
 
-    if ( url ) {
-      if ( url.match( /.*\.(jpg)$/i ) ) {
-        if ( url.match( /^http:\/\/.*/ ) ) {
-          this.urls.push( "/" + url );
-        }else {
-          this.urls.push( this.parsedUrl.protocol + "//" +
-                          this.parsedUrl.hostname + "/" +
-                          url );
-        }
+    if ( url && url.match( /.*\.(jpg)$/i ) ) {
+      if ( url.match( /^http:\/\/.*/ ) ) {
+        this.urls.push( "/" + url );
+      } else {
+        this.urls.push( this.parsedUrl.protocol + "//" +
+                        this.parsedUrl.hostname + "/" +
+                        url );
       }
     }
   }
